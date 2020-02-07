@@ -1,10 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {initialDragList} from './../constants';
+import {initialDragList} from '../constants';
+import {useStore} from './../storeProvider';
 let curIdx = '';
+
+function getRandomColor() {
+  return '#' + ((Math.random() * 0xffffff) << 0).toString(16);
+}
+
 function DraggableItem(props) {
   useEffect(() => {
     const {id, onDrogChange, onStartDragChange} = props;
-
     const targetEle = document.getElementById(id);
 
     targetEle.addEventListener(
@@ -56,29 +61,28 @@ function DraggableItem(props) {
 
   return (
     <div className="drag-wrapper" draggable={true} id={props.id}>
+      {`${props.id}. `}
       {props.name}
     </div>
   );
 }
 
 function DragListComponent() {
-  const [dragList, setDragList] = useState(initialDragList);
+  const {state, dispatch} = useStore();
 
   const handleDropChange = (start, end) => {
     if (start !== end) {
-      const removed = dragList.filter(val => val.index == start)[0];
-      const bottom = dragList.indexOf(
-        dragList.filter(val => val.index == end)[0]
-      );
-      let tempList = dragList.filter(val => val.index != start);
+      const removed = state.filter(val => val.index == start)[0];
+      const bottom = state.indexOf(state.filter(val => val.index == end)[0]);
+      let tempList = state.filter(val => val.index != start);
       tempList.splice(bottom, 0, removed);
-      setDragList(tempList);
+      dispatch({type: 'UPDATE', payload: tempList});
     }
   };
 
   return (
     <React.Fragment>
-      {dragList.map((item, idx) => (
+      {state.map((item, idx) => (
         <DraggableItem
           key={idx}
           id={item.index}

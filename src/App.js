@@ -1,12 +1,17 @@
 import React from 'react';
 import './App.css';
-import DragListComponent from './components/Drag';
+import DragListComponent from './components/TodoListCompoent';
+import OperationComponent from './components/OperationComponent';
+import {Provider} from './storeProvider';
 
 function App() {
   return (
-    <div className="App">
-      <DragListComponent />
-    </div>
+    <Provider>
+      <div className="App">
+        <OperationComponent />
+        <DragListComponent />
+      </div>
+    </Provider>
   );
 }
 
