@@ -9,8 +9,12 @@ function OperationComponent() {
   }
 
   function onHandleInput() {
-    dispatch({type: 'ADD_ITEM', payload: input});
-    setInput('');
+    if (input === '') {
+      alert('please input your goal today!');
+    } else {
+      dispatch({type: 'ADD_ITEM', payload: input});
+      setInput('');
+    }
   }
   return (
     <div className="operate-wrapper">

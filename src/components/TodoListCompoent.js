@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import {initialDragList} from '../constants';
+import React, {useEffect} from 'react';
 import {useStore} from './../storeProvider';
 let curIdx = '';
 
